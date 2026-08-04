@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "BJJ Technique Book"
+description = "A Brazilian Jiu-Jitsu digital technique reference book with a rich landing page covering BJJ history and journey, plus a searchable library of techniques with images and detailed explanations. Designed for practitioners of all levels to study and reference."
+version = "1.0.0"
+id = "artifacts/bjj-book"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22618
+
+[services.development]
+run = "pnpm --filter @workspace/bjj-book run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bjj-book", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bjj-book/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22618"
+BASE_PATH = "/"
