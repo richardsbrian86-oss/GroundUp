@@ -48,7 +48,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           >
-            <h1 className="font-sans text-6xl md:text-8xl lg:text-[10rem] font-bold uppercase tracking-tighter text-foreground leading-[0.85]" data-testid="text-hero-headline">
+            <h1 className="font-sans text-6xl md:text-8xl lg:text-[10rem] uppercase tracking-tighter text-foreground leading-[0.85] text-center font-semibold" data-testid="text-hero-headline">
               The <span className="text-primary italic font-serif tracking-normal pr-4">Gentle</span> Art
             </h1>
           </motion.div>
@@ -84,7 +84,6 @@ export default function Landing() {
           </motion.div>
         </div>
       </section>
-
       {/* History Section */}
       <section className="py-32 px-6 bg-background relative">
         <div className="max-w-4xl mx-auto">
@@ -125,7 +124,6 @@ export default function Landing() {
           </motion.div>
         </div>
       </section>
-
       {/* Belt Journey */}
       <section className="py-32 px-6 bg-card border-y border-white/5 overflow-hidden">
         <div className="max-w-7xl mx-auto">
@@ -159,7 +157,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
       {/* Featured Techniques */}
       <section className="py-32 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
@@ -199,7 +196,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
       {/* Why BJJ */}
       <section className="py-40 px-6 bg-background relative">
         <div className="max-w-4xl mx-auto text-center">
@@ -225,7 +221,6 @@ export default function Landing() {
           </motion.div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="py-12 text-center border-t border-white/5 bg-card">
         <p className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground">
