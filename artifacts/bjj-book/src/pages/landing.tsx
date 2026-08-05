@@ -3,6 +3,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 // @ts-ignore
 import heroImg from "@assets/bjj-hero.jpg";
+import { techniques } from "../data/techniques";
+import { TechniqueCard } from "../components/technique-card";
+
+const FEATURED_IDS = ["triangle-choke", "berimbolo", "inside-heel-hook", "body-lock-pass", "closed-guard", "rear-naked-choke"];
 
 export default function Landing() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,7 +60,8 @@ export default function Landing() {
             className="mt-12 md:mt-16 max-w-2xl mx-auto"
           >
             <p className="font-serif text-xl md:text-2xl text-muted-foreground leading-relaxed" data-testid="text-hero-sub">
-              A living encyclopedia for the discipline. The techniques, the journey, and the undeniable truth of the mat.
+              A living encyclopedia for the discipline. {techniques.length} techniques broken down
+              chapter by chapter &mdash; the journey, the mechanics, and the undeniable truth of the mat.
             </p>
           </motion.div>
 
@@ -151,6 +156,46 @@ export default function Landing() {
                 <p className="font-serif text-muted-foreground">{belt.desc}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Techniques */}
+      <section className="py-32 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-6 flex items-center gap-5">
+                <div className="h-px w-12 bg-primary" />
+                <span className="font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-primary">
+                  From the Library
+                </span>
+              </div>
+              <h2 className="font-sans text-4xl md:text-6xl font-bold uppercase tracking-tight leading-none">
+                {techniques.length} Techniques.
+                <br />
+                One Book.
+              </h2>
+              <p className="mt-6 max-w-lg font-serif text-lg text-muted-foreground leading-relaxed">
+                Every entry is a full chapter &mdash; setups, execution, chains, concepts, and the
+                mistakes that cost you the position. From the foundations to the modern leg lock game.
+              </p>
+            </div>
+            <Link
+              href="/techniques"
+              className="group inline-flex shrink-0 items-center gap-4 font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary transition-colors hover:text-foreground"
+              data-testid="link-featured-all"
+            >
+              Browse All
+              <div className="h-px w-8 bg-primary transition-all group-hover:w-14 group-hover:bg-foreground" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {FEATURED_IDS.map((id, i) => {
+              const t = techniques.find((x) => x.id === id);
+              return t ? <TechniqueCard key={t.id} technique={t} index={i} /> : null;
+            })}
           </div>
         </div>
       </section>
