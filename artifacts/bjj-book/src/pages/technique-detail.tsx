@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { techniques } from '../data/techniques';
 import { techniqueImage } from '../lib/technique-images';
 import { difficultyColor } from '../components/technique-card';
+import { glossifyTechnique } from '../lib/glossify';
 
 function SectionHeading({ n, title }: { n: string; title: string }) {
   return (
@@ -27,6 +28,17 @@ export default function TechniqueDetail() {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [id]);
 
+  useEffect(() => {
+    document.title = technique
+      ? `${technique.name} — Jiu-Jitsu for Everyone`
+      : 'Jiu-Jitsu for Everyone';
+    return () => {
+      document.title = 'Jiu-Jitsu for Everyone';
+    };
+  }, [technique]);
+
+  const glossed = useMemo(() => (technique ? glossifyTechnique(technique) : null), [technique?.id]);
+
   const related = useMemo(() => {
     if (!technique) return [];
     return techniques
@@ -43,7 +55,7 @@ export default function TechniqueDetail() {
       .slice(0, 4);
   }, [technique]);
 
-  if (!technique) {
+  if (!technique || !glossed) {
     return (
       <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
         <div className="mb-8 h-14 w-14 rotate-45 border border-white/15" />
@@ -165,14 +177,14 @@ export default function TechniqueDetail() {
         {/* Overview + concept */}
         <div className="mb-24 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
           <p className="font-serif text-xl leading-[1.75] text-foreground/90 md:text-2xl md:leading-[1.7]">
-            {technique.description}
+            {glossed.description}
           </p>
           <aside className="border-l-2 border-secondary/70 pl-6">
             <h3 className="mb-4 font-sans text-[10px] font-bold uppercase tracking-[0.25em] text-secondary">
               The Concept
             </h3>
             <p className="font-serif text-lg italic leading-relaxed text-muted-foreground">
-              {technique.concept}
+              {glossed.concept}
             </p>
           </aside>
         </div>
@@ -184,7 +196,7 @@ export default function TechniqueDetail() {
             <section className="mb-20">
               <SectionHeading n="I" title="When To Use" />
               <p className="font-serif text-lg leading-relaxed text-muted-foreground">
-                {technique.whenToUse}
+                {glossed.whenToUse}
               </p>
             </section>
 
@@ -196,7 +208,7 @@ export default function TechniqueDetail() {
                   <li key={i} className="group flex gap-5">
                     <span className="mt-2 h-px w-6 shrink-0 bg-primary/60 transition-all group-hover:w-9" />
                     <span className="font-serif text-lg leading-relaxed text-muted-foreground transition-colors group-hover:text-foreground">
-                      {s}
+                      {glossed.setups[i]}
                     </span>
                   </li>
                 ))}
@@ -213,7 +225,7 @@ export default function TechniqueDetail() {
                       {i + 1}
                     </span>
                     <p className="pt-0.5 font-serif text-lg leading-relaxed text-muted-foreground transition-colors group-hover:text-foreground">
-                      {step}
+                      {glossed.steps[i]}
                     </p>
                   </li>
                 ))}
@@ -233,7 +245,7 @@ export default function TechniqueDetail() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="font-serif leading-relaxed text-muted-foreground transition-colors group-hover:text-foreground">
-                      {f}
+                      {glossed.followUps[i]}
                     </p>
                   </div>
                 ))}
@@ -252,7 +264,7 @@ export default function TechniqueDetail() {
                   <li key={i} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary" />
                     <span className="font-serif leading-relaxed text-muted-foreground">
-                      {point}
+                      {glossed.keyPoints[i]}
                     </span>
                   </li>
                 ))}
@@ -267,7 +279,7 @@ export default function TechniqueDetail() {
                 {technique.commonMistakes.map((m, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rotate-45 border border-primary/70" />
-                    <span className="font-serif leading-relaxed text-muted-foreground/90">{m}</span>
+                    <span className="font-serif leading-relaxed text-muted-foreground/90">{glossed.commonMistakes[i]}</span>
                   </li>
                 ))}
               </ul>

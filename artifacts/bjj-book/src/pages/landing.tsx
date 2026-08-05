@@ -88,6 +88,21 @@ export default function Landing() {
           {/* Left column — type lives here; right half is open for the photo */}
           <div className="max-w-2xl">
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-5 flex items-center gap-4 md:mb-6"
+            >
+              <div className="h-px w-10 bg-primary" />
+              <span
+                className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-primary"
+                data-testid="text-hero-kicker"
+              >
+                Jiu-Jitsu, For Everyone
+              </span>
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
@@ -114,10 +129,10 @@ export default function Landing() {
                 className="font-serif text-lg md:text-xl text-muted-foreground leading-relaxed"
                 data-testid="text-hero-sub"
               >
-                A living encyclopedia for the discipline.{" "}
-                {techniques.length} techniques broken down chapter by
-                chapter &mdash; the journey, the mechanics, and the
-                undeniable truth of the mat.
+                A complete technique book for self-defense and competition
+                &mdash; {techniques.length} moves broken down step by step,
+                in plain language. No mat time, no prior knowledge, no gym
+                membership required to start.
               </p>
             </motion.div>
 
@@ -310,7 +325,7 @@ export default function Landing() {
       {/* Footer */}
       <footer className="py-12 text-center border-t border-white/5 bg-card">
         <p className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          For the discipline. For the art.
+          For every man, woman, and child who wants to learn.
         </p>
       </footer>
     </div>

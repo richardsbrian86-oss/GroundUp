@@ -16,8 +16,13 @@ export default function Nav() {
           <div className="w-8 h-8 bg-primary flex items-center justify-center rotate-45 group-hover:rotate-90 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
             <div className="w-2.5 h-2.5 bg-background" />
           </div>
-          <span className="font-sans text-xl font-bold tracking-[0.15em] uppercase text-foreground">
-            BJJ<span className="text-muted-foreground font-medium">Ref</span>
+          <span className="flex flex-col leading-none">
+            <span className="font-sans text-base sm:text-lg font-bold tracking-[0.1em] uppercase text-foreground">
+              Jiu-Jitsu
+            </span>
+            <span className="font-sans text-[8px] sm:text-[9px] font-medium tracking-[0.25em] uppercase text-muted-foreground">
+              For Everyone
+            </span>
           </span>
         </Link>
         

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, X, LayoutGrid, List } from 'lucide-react';
 import { techniques } from '../data/techniques';
@@ -82,6 +82,13 @@ export default function Techniques() {
     }
     return groups;
   }, [filtered]);
+
+  useEffect(() => {
+    document.title = 'Library — Jiu-Jitsu for Everyone';
+    return () => {
+      document.title = 'Jiu-Jitsu for Everyone';
+    };
+  }, []);
 
   const hasFilters =
     category !== 'All' || difficulty !== 'All' || gi !== 'All' || query.trim() !== '';
