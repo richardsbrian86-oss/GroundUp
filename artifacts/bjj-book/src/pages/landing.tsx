@@ -5,6 +5,7 @@ import { useRef } from "react";
 import heroImg from "@assets/66809244-DJK_6995_1785896525496.jpg";
 import { techniques } from "../data/techniques";
 import { TechniqueCard } from "../components/technique-card";
+import { PlateIndex } from "../components/plate-index";
 
 const FEATURED_IDS = [
   "triangle-choke",
@@ -140,6 +141,8 @@ export default function Landing() {
           </div>
         </div>
       </section>
+      {/* Plate Index — the full 74-technique wall */}
+      <PlateIndex techniques={techniques} />
       {/* History Section */}
       <section className="py-32 px-6 bg-background relative">
         <div className="max-w-4xl mx-auto">
