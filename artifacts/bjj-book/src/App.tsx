@@ -4,6 +4,7 @@ import Nav from './components/nav';
 import Landing from './pages/landing';
 import Techniques from './pages/techniques';
 import TechniqueDetail from './pages/technique-detail';
+import EscapeChallenge from './pages/escape-challenge';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function Router() {
           <Route path="/" component={Landing} />
           <Route path="/techniques" component={Techniques} />
           <Route path="/techniques/:id" component={TechniqueDetail} />
+          <Route path="/challenge" component={EscapeChallenge} />
           <Route>
             <div className="flex-1 flex flex-col items-center justify-center min-h-[70vh]">
               <div className="w-16 h-16 bg-muted mb-8 rotate-45 flex items-center justify-center">

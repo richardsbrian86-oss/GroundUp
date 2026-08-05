@@ -1,0 +1,2 @@
+- [BJJ book jargon glossary](bjj-book-glossary.md) — technique pages auto-annotate jargon via a data+regex layer, not by editing technique prose.
+- [Screenshot vs staggered hero animations](screenshot-staggered-animations.md) — Screenshot tool can catch framer-motion delayed elements mid-fade, looking like a missing-element bug.

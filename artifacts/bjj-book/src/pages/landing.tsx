@@ -140,11 +140,21 @@ export default function Landing() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="mt-12"
+              className="mt-12 flex flex-wrap gap-4"
             >
               <Link
-                href="/techniques"
+                href="/challenge"
                 className="group inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:bg-primary/90 hover:scale-105"
+                data-testid="button-challenge"
+              >
+                <span className="relative">
+                  Could You Escape This?
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-current transition-all group-hover:w-full" />
+                </span>
+              </Link>
+              <Link
+                href="/techniques"
+                className="group inline-flex items-center justify-center px-10 py-5 border border-white/20 text-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:border-white/40"
                 data-testid="button-explore"
               >
                 <span className="relative">
