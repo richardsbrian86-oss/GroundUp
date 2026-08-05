@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 // @ts-ignore
-import heroImg from "@assets/bjj-hero.jpg";
+import heroImg from "@assets/66809244-DJK_6995_1785896525496.jpg";
 import { techniques } from "../data/techniques";
 import { TechniqueCard } from "../components/technique-card";
 
