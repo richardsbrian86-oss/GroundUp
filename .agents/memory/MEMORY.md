@@ -1,2 +1,3 @@
 - [BJJ book jargon glossary](bjj-book-glossary.md) — technique pages auto-annotate jargon via a data+regex layer, not by editing technique prose.
 - [Screenshot vs staggered hero animations](screenshot-staggered-animations.md) — Screenshot tool can catch framer-motion delayed elements mid-fade, looking like a missing-element bug.
+- [Technique image red-splotch cleanup](technique-image-red-splotch-cleanup.md) — AI sketch images tend to include blood-like red washes; detect and desaturate instead of regenerating.
