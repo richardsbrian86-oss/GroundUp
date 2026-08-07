@@ -21,3 +21,10 @@ uri = "file://attached_assets/hero-concept-hero-v3.jpg"
 type = "image"
 title = "V3 — Armbar Arc"
 description = "Low side-profile armbar from guard at full extension — the body forms a dramatic geometric arc, crimson at the joint."
+
+[[outputs]]
+id = "hbfsGZSEJDlCc4jh-eLlw"
+uri = "file://artifacts/ground-up-promo/public/audio/bg_music.mp3"
+type = "audio"
+title = "background music"
+description = "Generated music: Cinematic moody instrumental background music scoring a martial-arts brand promo. Deep taiko-style percussion, low cello drones, sparse ink-brush textures, tense build, 100 BPM, disc…"
