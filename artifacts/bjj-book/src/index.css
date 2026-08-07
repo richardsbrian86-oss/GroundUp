@@ -82,6 +82,11 @@
   }
 }
 
+/* Smooth scroll — supports the rolling/flowing motion feel throughout */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Custom scrollbar for webkit */
 ::-webkit-scrollbar {
   width: 8px;

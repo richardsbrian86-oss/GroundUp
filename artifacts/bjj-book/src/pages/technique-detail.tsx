@@ -30,10 +30,10 @@ export default function TechniqueDetail() {
 
   useEffect(() => {
     document.title = technique
-      ? `${technique.name} — Jiu-Jitsu for Everyone`
-      : 'Jiu-Jitsu for Everyone';
+      ? `${technique.name} — Ground Up`
+      : 'Ground Up — A Jiu-Jitsu Reference';
     return () => {
-      document.title = 'Jiu-Jitsu for Everyone';
+      document.title = 'Ground Up — A Jiu-Jitsu Reference';
     };
   }, [technique]);
 

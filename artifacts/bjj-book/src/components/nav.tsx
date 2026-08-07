@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
+import { ScrollProgress } from "./scroll-progress";
 
 export default function Nav() {
   const [location] = useLocation();
@@ -9,7 +10,7 @@ export default function Nav() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-md"
+      className="fixed top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-md relative"
     >
       <div className="container mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
         <Link href="/" className="group flex items-center gap-2 sm:gap-3 shrink-0" data-testid="link-home">
@@ -18,10 +19,10 @@ export default function Nav() {
           </div>
           <span className="flex flex-col leading-none whitespace-nowrap">
             <span className="font-sans text-xs sm:text-lg font-bold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-foreground">
-              Jiu-Jitsu
+              Ground Up
             </span>
             <span className="font-sans text-[7px] sm:text-[9px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase text-muted-foreground">
-              For Everyone
+              BJJ Reference
             </span>
           </span>
         </Link>
@@ -65,6 +66,7 @@ export default function Nav() {
           </Link>
         </nav>
       </div>
+      <ScrollProgress />
     </motion.header>
   );
 }

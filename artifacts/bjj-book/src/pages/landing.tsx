@@ -98,7 +98,7 @@ export default function Landing() {
                 className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-primary"
                 data-testid="text-hero-kicker"
               >
-                Jiu-Jitsu, For Everyone
+                Ground Up
               </span>
             </motion.div>
 

@@ -84,9 +84,9 @@ export default function Techniques() {
   }, [filtered]);
 
   useEffect(() => {
-    document.title = 'Library — Jiu-Jitsu for Everyone';
+    document.title = 'Library — Ground Up';
     return () => {
-      document.title = 'Jiu-Jitsu for Everyone';
+      document.title = 'Ground Up — A Jiu-Jitsu Reference';
     };
   }, []);
 

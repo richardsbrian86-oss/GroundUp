@@ -15,9 +15,9 @@ export default function EscapeChallenge() {
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
 
   useEffect(() => {
-    document.title = 'Could You Escape This? — Jiu-Jitsu for Everyone';
+    document.title = 'Could You Escape This? — Ground Up';
     return () => {
-      document.title = 'Jiu-Jitsu for Everyone';
+      document.title = 'Ground Up — A Jiu-Jitsu Reference';
     };
   }, []);
 
@@ -51,7 +51,7 @@ export default function EscapeChallenge() {
   const handleShare = async () => {
     const text = scenario
       ? `I just escaped "${scenario.title}" using a real Jiu-Jitsu move (${technique?.name}). Think you could? Try it:`
-      : 'Could you escape this? A jiu-jitsu challenge for everyone:';
+      : 'Could you escape this? A jiu-jitsu challenge from Ground Up:';
     const url = window.location.href;
     try {
       if (navigator.share) {
