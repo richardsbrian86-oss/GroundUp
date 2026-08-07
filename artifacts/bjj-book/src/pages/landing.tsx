@@ -88,21 +88,6 @@ export default function Landing() {
           {/* Left column — type lives here; right half is open for the photo */}
           <div className="max-w-2xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-5 flex items-center gap-4 md:mb-6"
-            >
-              <div className="h-px w-10 bg-primary" />
-              <span
-                className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-primary"
-                data-testid="text-hero-kicker"
-              >
-                Ground Up
-              </span>
-            </motion.div>
-
-            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
