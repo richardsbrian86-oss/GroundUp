@@ -51,27 +51,22 @@ interface Props {
 
 export function PlateIndex({ techniques }: Props) {
   return (
-    <section className="bg-zinc-950 border-y border-white/5">
-      {/* Section header */}
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-12">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+    <div className="mt-24">
+      {/* Compact subsection header — the wall is the complete index of the Library above */}
+      <div className="max-w-7xl mx-auto px-6 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-t border-white/[0.07] pt-10">
           <div>
-            <div className="flex items-center gap-5 mb-6">
-              <div className="h-px w-12 bg-primary" />
-              <span className="font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-primary">
-                Plate Index
-              </span>
-            </div>
-            <h2 className="font-sans text-4xl md:text-5xl font-bold uppercase tracking-tight leading-none text-foreground">
-              {techniques.length} Techniques
-            </h2>
-            <p className="mt-4 font-serif text-muted-foreground text-lg">
-              Every documented position, attack, and chain in the art.
+            <span className="font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
+              The Complete Index
+            </span>
+            <p className="mt-3 font-serif text-muted-foreground text-lg">
+              Every documented position, attack, and chain in the art &mdash; all{" "}
+              {techniques.length} plates.
             </p>
           </div>
 
           {/* Category legend */}
-          <div className="flex flex-wrap gap-x-6 gap-y-2 md:flex-col md:items-end md:gap-2">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end md:max-w-md">
             {(Object.entries(CATEGORY) as [TechniqueCategory, typeof CATEGORY[TechniqueCategory]][]).map(
               ([cat, conf]) => {
                 const count = techniques.filter((t) => t.category === cat).length;
@@ -95,7 +90,7 @@ export function PlateIndex({ techniques }: Props) {
       </div>
 
       {/* The wall — gap-px on the grid with bg-white/5 creates hairline tile borders */}
-      <div className="max-w-7xl mx-auto px-6 pb-20">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-px bg-white/[0.04]">
           {techniques.map((t, i) => {
             const conf = CATEGORY[t.category];
@@ -116,7 +111,7 @@ export function PlateIndex({ techniques }: Props) {
                     <img
                       src={img}
                       alt={t.name}
-                      className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-45 transition-opacity duration-400"
+                      className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-75 transition-all duration-500"
                     />
                   ) : (
                     <div
@@ -124,8 +119,8 @@ export function PlateIndex({ techniques }: Props) {
                     />
                   )}
 
-                  {/* Dark overlay that lifts on hover */}
-                  <div className="absolute inset-0 bg-black/70 group-hover:bg-black/30 transition-colors duration-300" />
+                  {/* Single directional scrim — dense at the base where the name sits */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25 group-hover:from-black/70 group-hover:via-black/25 group-hover:to-transparent transition-colors duration-500" />
 
                   {/* Category bar — top edge */}
                   <div
@@ -175,6 +170,6 @@ export function PlateIndex({ techniques }: Props) {
           </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

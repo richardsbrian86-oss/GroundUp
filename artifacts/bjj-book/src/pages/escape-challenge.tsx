@@ -99,7 +99,7 @@ export default function EscapeChallenge() {
               <div className="mb-4 flex items-center gap-4">
                 <div className="h-px w-10 bg-primary" />
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-primary">
-                  A 30-Second Challenge
+                  The Escape Challenge
                 </span>
               </div>
               <h1

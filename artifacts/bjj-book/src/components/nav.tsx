@@ -62,7 +62,7 @@ export default function Nav() {
             }`}
             data-testid="link-nav-challenge"
           >
-            Try It
+            Escape Challenge
           </Link>
         </nav>
       </div>

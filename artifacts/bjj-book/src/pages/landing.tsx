@@ -148,7 +148,7 @@ export default function Landing() {
                 data-testid="button-challenge"
               >
                 <span className="relative">
-                  Could You Escape This?
+                  Take the Escape Challenge
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-current transition-all group-hover:w-full" />
                 </span>
               </Link>
@@ -166,8 +166,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-      {/* Plate Index — the full 74-technique wall */}
-      <PlateIndex techniques={techniques} />
       {/* History Section */}
       <section className="py-32 px-6 bg-background relative">
         <div className="max-w-4xl mx-auto">
@@ -304,6 +302,9 @@ export default function Landing() {
             })}
           </div>
         </div>
+
+        {/* The complete plate wall — same section, same Library */}
+        <PlateIndex techniques={techniques} />
       </section>
       {/* Why BJJ */}
       <section className="py-40 px-6 bg-background relative">
