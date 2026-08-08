@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'wouter';
-import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import { techniques } from '../data/techniques';
 import { techniqueImage } from '../lib/technique-images';
 import { difficultyColor } from '../components/technique-card';
@@ -14,6 +14,102 @@ function SectionHeading({ n, title }: { n: string; title: string }) {
       <h2 className="font-sans text-xl font-bold uppercase tracking-[0.18em] text-foreground md:text-2xl">
         {title}
       </h2>
+    </div>
+  );
+}
+
+/** Mobile-only collapsible showing Key Details + Common Errors before the step content. Hidden on lg+. */
+function MobileDetailsSummary({
+  glossed,
+  technique,
+}: {
+  glossed: ReturnType<typeof glossifyTechnique>;
+  technique: (typeof import('../data/techniques').techniques)[number];
+}) {
+  const [keyOpen, setKeyOpen] = useState(true);
+  const [errorsOpen, setErrorsOpen] = useState(false);
+
+  return (
+    <div className="mb-16 space-y-3 lg:hidden">
+      {/* Key Details */}
+      <div className="border border-white/[0.07] bg-card">
+        <button
+          type="button"
+          onClick={() => setKeyOpen((o) => !o)}
+          className="flex w-full items-center justify-between px-6 py-4"
+          aria-expanded={keyOpen}
+        >
+          <span className="font-sans text-sm font-bold uppercase tracking-[0.22em] text-primary">
+            Key Details
+          </span>
+          <ChevronDown
+            className={`h-4 w-4 text-primary transition-transform duration-200 ${keyOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
+        <AnimatePresence initial={false}>
+          {keyOpen && (
+            <motion.div
+              key="key-details"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <ul className="space-y-4 px-6 pb-6">
+                {technique.keyPoints.map((_, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary" />
+                    <span className="font-serif leading-relaxed text-muted-foreground">
+                      {glossed.keyPoints[i]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Common Errors */}
+      <div className="border border-primary/25 bg-primary/[0.06]">
+        <button
+          type="button"
+          onClick={() => setErrorsOpen((o) => !o)}
+          className="flex w-full items-center justify-between px-6 py-4"
+          aria-expanded={errorsOpen}
+        >
+          <span className="font-sans text-sm font-bold uppercase tracking-[0.22em] text-primary">
+            Common Errors
+          </span>
+          <ChevronDown
+            className={`h-4 w-4 text-primary transition-transform duration-200 ${errorsOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
+        <AnimatePresence initial={false}>
+          {errorsOpen && (
+            <motion.div
+              key="common-errors"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <ul className="space-y-4 px-6 pb-6">
+                {technique.commonMistakes.map((_, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rotate-45 border border-primary/70" />
+                    <span className="font-serif leading-relaxed text-muted-foreground/90">
+                      {glossed.commonMistakes[i]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -189,6 +285,9 @@ export default function TechniqueDetail() {
           </aside>
         </div>
 
+        {/* Mobile-only: Key Details + Common Errors collapsible (appears before steps) */}
+        <MobileDetailsSummary glossed={glossed} technique={technique} />
+
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-20">
           {/* Main column */}
           <div className="min-w-0">
@@ -255,7 +354,8 @@ export default function TechniqueDetail() {
 
           {/* Sidebar */}
           <aside className="min-w-0 space-y-10 lg:sticky lg:top-28 lg:self-start">
-            <div className="border border-white/[0.07] bg-card p-8">
+            {/* Key Details — hidden on mobile (shown in MobileDetailsSummary above) */}
+            <div className="hidden lg:block border border-white/[0.07] bg-card p-8">
               <h3 className="mb-6 font-sans text-sm font-bold uppercase tracking-[0.22em] text-primary">
                 Key Details
               </h3>
@@ -271,7 +371,8 @@ export default function TechniqueDetail() {
               </ul>
             </div>
 
-            <div className="border border-primary/25 bg-primary/[0.06] p-8">
+            {/* Common Errors — hidden on mobile (shown in MobileDetailsSummary above) */}
+            <div className="hidden lg:block border border-primary/25 bg-primary/[0.06] p-8">
               <h3 className="mb-6 font-sans text-sm font-bold uppercase tracking-[0.22em] text-primary">
                 Common Errors
               </h3>
