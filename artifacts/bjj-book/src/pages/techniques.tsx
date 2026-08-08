@@ -154,7 +154,7 @@ export default function Techniques() {
         </div>
 
         {/* Filter bar */}
-        <div className="sticky top-16 z-30 -mx-6 mb-12 border-b border-white/[0.07] bg-background/90 px-6 py-5 backdrop-blur-md sm:top-20">
+        <div className="z-30 -mx-6 mb-12 border-b border-white/[0.07] bg-background/90 px-6 py-5 backdrop-blur-md md:sticky md:top-20">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
               <div className="relative flex-1">
