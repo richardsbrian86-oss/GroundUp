@@ -112,7 +112,7 @@ export default function TechniqueDetail() {
               </h1>
             </div>
 
-            <dl className="grid grid-cols-3 gap-6 border-t border-white/[0.07] pt-6 lg:border-none lg:pt-0">
+            <dl className="grid grid-cols-3 gap-2 sm:gap-6 border-t border-white/[0.07] pt-6 lg:border-none lg:pt-0">
               <div>
                 <dt className="font-sans text-[9px] uppercase tracking-[0.22em] text-muted-foreground/60">
                   Position

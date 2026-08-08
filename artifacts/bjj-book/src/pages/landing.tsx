@@ -129,7 +129,7 @@ export default function Landing() {
             >
               <Link
                 href="/challenge"
-                className="group inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:bg-primary/90 hover:scale-105"
+                className="group inline-flex items-center justify-center w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:bg-primary/90 hover:scale-105"
                 data-testid="button-challenge"
               >
                 <span className="relative">
@@ -139,7 +139,7 @@ export default function Landing() {
               </Link>
               <Link
                 href="/techniques"
-                className="group inline-flex items-center justify-center px-10 py-5 border border-white/20 text-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:border-white/40"
+                className="group inline-flex items-center justify-center w-full sm:w-auto px-10 py-5 border border-white/20 text-foreground font-sans uppercase tracking-[0.2em] font-semibold text-sm transition-all hover:border-white/40"
                 data-testid="button-explore"
               >
                 <span className="relative">

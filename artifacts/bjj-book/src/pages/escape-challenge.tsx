@@ -281,17 +281,17 @@ export default function EscapeChallenge() {
                 {scenario.resolutionNarration}
               </p>
 
-              <div className="mt-12 flex flex-wrap gap-4">
+              <div className="mt-12 flex flex-col sm:flex-row flex-wrap gap-4">
                 <Link
                   href={`/techniques/${technique.id}`}
-                  className="inline-flex items-center justify-center bg-primary px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground transition-all hover:bg-primary/90"
+                  className="inline-flex items-center justify-center w-full sm:w-auto bg-primary px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground transition-all hover:bg-primary/90"
                   data-testid="link-learn-technique"
                 >
                   Learn the Full Technique
                 </Link>
                 <button
                   onClick={handleShare}
-                  className="inline-flex items-center gap-2 border border-white/20 px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-foreground transition-all hover:border-white/40"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto border border-white/20 px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-foreground transition-all hover:border-white/40"
                   data-testid="button-share"
                 >
                   <Share2 className="h-4 w-4" />
@@ -299,7 +299,7 @@ export default function EscapeChallenge() {
                 </button>
                 <button
                   onClick={() => setStage('select')}
-                  className="inline-flex items-center justify-center px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-all hover:text-foreground"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-all hover:text-foreground"
                   data-testid="button-another-scenario"
                 >
                   Try Another Scenario
