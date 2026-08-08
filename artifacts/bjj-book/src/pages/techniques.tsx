@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Search, X, LayoutGrid, List } from 'lucide-react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, LayoutGrid, List, SlidersHorizontal, Check } from 'lucide-react';
 import { techniques } from '../data/techniques';
 import type { Technique, TechniqueCategory, Difficulty, GiNoGi } from '../data/types';
 import { TechniqueCard, TechniqueRow } from '../components/technique-card';
@@ -44,12 +44,224 @@ function Pill({
   );
 }
 
+/** Mobile bottom-sheet filter drawer */
+function MobileFilterSheet({
+  open,
+  onClose,
+  category,
+  setCategory,
+  difficulty,
+  setDifficulty,
+  gi,
+  setGi,
+  hasFilters,
+  clearAll,
+  counts,
+}: {
+  open: boolean;
+  onClose: () => void;
+  category: 'All' | TechniqueCategory;
+  setCategory: (v: 'All' | TechniqueCategory) => void;
+  difficulty: 'All' | Difficulty;
+  setDifficulty: (v: 'All' | Difficulty) => void;
+  gi: 'All' | GiNoGi;
+  setGi: (v: 'All' | GiNoGi) => void;
+  hasFilters: boolean;
+  clearAll: () => void;
+  counts: Record<string, number>;
+}) {
+  const sheetRef = useRef<HTMLDivElement>(null);
+
+  // Close on outside tap
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [open, onClose]);
+
+  // Prevent body scroll when open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  const SheetPill = ({
+    active,
+    onClick,
+    children,
+  }: {
+    active: boolean;
+    onClick: () => void;
+    children: React.ReactNode;
+  }) => (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2 border px-4 py-2.5 font-sans text-[11px] uppercase tracking-[0.16em] transition-all ${
+        active
+          ? 'border-primary bg-primary text-primary-foreground'
+          : 'border-white/10 bg-transparent text-muted-foreground'
+      }`}
+    >
+      {active && <Check className="h-3 w-3 shrink-0" />}
+      {children}
+    </button>
+  );
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm md:hidden"
+            onClick={handleBackdropClick}
+          />
+
+          {/* Sheet */}
+          <motion.div
+            ref={sheetRef}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            className="fixed bottom-0 left-0 right-0 z-50 max-h-[85dvh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-background pb-safe md:hidden"
+            aria-modal="true"
+            role="dialog"
+            aria-label="Filter techniques"
+          >
+            {/* Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="h-1 w-10 rounded-full bg-white/20" />
+            </div>
+
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-white/[0.07] px-5 pb-4">
+              <h2 className="font-sans text-[13px] font-bold uppercase tracking-[0.22em] text-foreground">
+                Filters
+              </h2>
+              <div className="flex items-center gap-3">
+                {hasFilters && (
+                  <button
+                    onClick={clearAll}
+                    className="font-sans text-[10px] uppercase tracking-[0.18em] text-primary"
+                  >
+                    Clear all
+                  </button>
+                )}
+                <button
+                  onClick={onClose}
+                  aria-label="Close filters"
+                  className="rounded-full p-1 text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Filter groups */}
+            <div className="space-y-6 px-5 py-5">
+              {/* Category */}
+              <div>
+                <p className="mb-3 font-sans text-[9px] uppercase tracking-[0.26em] text-muted-foreground/60">
+                  Category
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <SheetPill
+                    active={category === 'All'}
+                    onClick={() => setCategory('All')}
+                  >
+                    All {techniques.length}
+                  </SheetPill>
+                  {CATEGORY_ORDER.map((cat) => (
+                    <SheetPill
+                      key={cat}
+                      active={category === cat}
+                      onClick={() => setCategory(category === cat ? 'All' : cat)}
+                    >
+                      {cat} {counts[cat] ?? 0}
+                    </SheetPill>
+                  ))}
+                </div>
+              </div>
+
+              {/* Difficulty */}
+              <div>
+                <p className="mb-3 font-sans text-[9px] uppercase tracking-[0.26em] text-muted-foreground/60">
+                  Level
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {DIFFICULTIES.map((d) => (
+                    <SheetPill
+                      key={d}
+                      active={difficulty === d}
+                      onClick={() => setDifficulty(difficulty === d ? 'All' : d)}
+                    >
+                      {d}
+                    </SheetPill>
+                  ))}
+                </div>
+              </div>
+
+              {/* Gi / No-Gi */}
+              <div>
+                <p className="mb-3 font-sans text-[9px] uppercase tracking-[0.26em] text-muted-foreground/60">
+                  Ruleset
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {GI_OPTIONS.map((g) => (
+                    <SheetPill
+                      key={g}
+                      active={gi === g}
+                      onClick={() => setGi(gi === g ? 'All' : g)}
+                    >
+                      {g}
+                    </SheetPill>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Done button */}
+            <div className="px-5 pb-6">
+              <button
+                onClick={onClose}
+                className="w-full bg-primary py-3.5 font-sans text-[11px] font-bold uppercase tracking-[0.22em] text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Show results
+              </button>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function Techniques() {
   const [category, setCategory] = useState<'All' | TechniqueCategory>('All');
   const [difficulty, setDifficulty] = useState<'All' | Difficulty>('All');
   const [gi, setGi] = useState<'All' | GiNoGi>('All');
   const [query, setQuery] = useState('');
   const [view, setView] = useState<ViewMode>('grid');
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
 
   const counts = useMemo(() => {
     const map: Record<string, number> = {};
@@ -92,6 +304,13 @@ export default function Techniques() {
 
   const hasFilters =
     category !== 'All' || difficulty !== 'All' || gi !== 'All' || query.trim() !== '';
+
+  // Count active non-search filters for the mobile badge
+  const activeFilterCount = [
+    category !== 'All',
+    difficulty !== 'All',
+    gi !== 'All',
+  ].filter(Boolean).length;
 
   const clearAll = () => {
     setCategory('All');
@@ -156,6 +375,7 @@ export default function Techniques() {
         {/* Filter bar */}
         <div className="z-30 -mx-6 mb-12 border-b border-white/[0.07] bg-background/90 px-6 py-5 backdrop-blur-md md:sticky md:top-20">
           <div className="flex flex-col gap-5">
+            {/* Search row */}
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
               <div className="relative flex-1">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -169,6 +389,22 @@ export default function Techniques() {
                 />
               </div>
               <div className="flex items-center gap-2">
+                {/* Mobile filter button — hidden on md+ */}
+                <button
+                  onClick={() => setFilterSheetOpen(true)}
+                  data-testid="button-mobile-filters"
+                  aria-label="Open filters"
+                  className="relative flex items-center gap-2 border border-white/10 px-4 py-3 font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-white/30 hover:text-foreground md:hidden"
+                >
+                  <SlidersHorizontal className="h-4 w-4" />
+                  <span>Filters</span>
+                  {activeFilterCount > 0 && (
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary font-sans text-[9px] font-bold text-primary-foreground">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
+
                 <div className="flex border border-white/10">
                   <button
                     onClick={() => setView('grid')}
@@ -207,7 +443,8 @@ export default function Techniques() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {/* Filter pills — desktop only */}
+            <div className="hidden md:flex flex-wrap items-center gap-x-6 gap-y-3">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="mr-1 font-sans text-[9px] uppercase tracking-[0.22em] text-muted-foreground/60">
                   Category
@@ -342,6 +579,21 @@ export default function Techniques() {
           </div>
         )}
       </div>
+
+      {/* Mobile filter bottom sheet */}
+      <MobileFilterSheet
+        open={filterSheetOpen}
+        onClose={() => setFilterSheetOpen(false)}
+        category={category}
+        setCategory={setCategory}
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+        gi={gi}
+        setGi={setGi}
+        hasFilters={hasFilters}
+        clearAll={clearAll}
+        counts={counts}
+      />
     </div>
   );
 }
