@@ -39,7 +39,7 @@ export default function Nav() {
           </Link>
           <Link 
             href="/techniques" 
-            className={`font-sans text-[10px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase transition-colors relative whitespace-nowrap ${
+            className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 font-sans text-[10px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase transition-colors relative whitespace-nowrap ${
               location.startsWith("/techniques") ? "text-primary" : "text-muted-foreground hover:text-foreground"
             }`}
             data-testid="link-nav-techniques"
@@ -55,7 +55,7 @@ export default function Nav() {
           </Link>
           <Link
             href="/challenge"
-            className={`font-sans text-[10px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase border px-2.5 py-1.5 sm:px-4 sm:py-2 transition-all whitespace-nowrap shrink-0 ${
+            className={`inline-flex items-center min-h-[44px] sm:min-h-0 font-sans text-[10px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase border px-2.5 py-1.5 sm:px-4 sm:py-2 transition-all whitespace-nowrap shrink-0 ${
               location.startsWith("/challenge")
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"

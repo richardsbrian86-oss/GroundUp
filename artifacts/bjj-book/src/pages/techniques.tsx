@@ -155,7 +155,7 @@ function MobileFilterSheet({
   }) => (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 border px-4 py-2.5 font-sans text-[11px] uppercase tracking-[0.16em] transition-all ${
+      className={`flex items-center gap-2 border px-4 min-h-[44px] font-sans text-[11px] uppercase tracking-[0.16em] transition-all ${
         active
           ? 'border-primary bg-primary text-primary-foreground'
           : 'border-white/10 bg-transparent text-muted-foreground'
@@ -450,7 +450,7 @@ export default function Techniques() {
                   onClick={() => setFilterSheetOpen(true)}
                   data-testid="button-mobile-filters"
                   aria-label="Open filters"
-                  className="relative flex items-center gap-2 border border-white/10 px-4 py-3 font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-white/30 hover:text-foreground md:hidden"
+                  className="relative flex items-center gap-2 border border-white/10 px-4 min-h-[44px] font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-white/30 hover:text-foreground md:hidden"
                 >
                   <SlidersHorizontal className="h-4 w-4" />
                   <span>Filters</span>
@@ -466,7 +466,7 @@ export default function Techniques() {
                     onClick={() => setView('grid')}
                     data-testid="button-view-grid"
                     aria-label="Grid view"
-                    className={`p-3 transition-colors ${
+                    className={`flex items-center justify-center p-3 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 transition-colors ${
                       view === 'grid'
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:text-foreground'
@@ -478,7 +478,7 @@ export default function Techniques() {
                     onClick={() => setView('index')}
                     data-testid="button-view-index"
                     aria-label="Index view"
-                    className={`p-3 transition-colors ${
+                    className={`flex items-center justify-center p-3 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 transition-colors ${
                       view === 'index'
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:text-foreground'
@@ -491,7 +491,7 @@ export default function Techniques() {
                   <button
                     onClick={clearAll}
                     data-testid="button-clear-filters"
-                    className="flex items-center gap-2 border border-white/10 px-4 py-3 font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                    className="flex items-center gap-2 border border-white/10 px-4 min-h-[44px] sm:min-h-0 sm:py-3 font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                   >
                     <X className="h-3 w-3" /> Clear
                   </button>
