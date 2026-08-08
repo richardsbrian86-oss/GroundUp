@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { Search, X, LayoutGrid, List, SlidersHorizontal, Check } from 'lucide-react';
 import { techniques } from '../data/techniques';
 import type { Technique, TechniqueCategory, Difficulty, GiNoGi } from '../data/types';
@@ -74,6 +74,8 @@ function MobileFilterSheet({
 
   // Swipe-to-dismiss state
   const sheetY = useMotionValue(0);
+  // Fade backdrop as sheet is dragged: 0px → full opacity, 80px+ → near transparent
+  const dragFactor = useTransform(sheetY, [0, 80], [1, 0], { clamp: true });
   const dragStartY = useRef(0);
   const dragStartTime = useRef(0);
 
@@ -107,7 +109,9 @@ function MobileFilterSheet({
         duration: 0.2,
         ease: 'easeOut',
         onComplete: () => {
-          sheetY.set(0);
+          // Do NOT reset sheetY here — dragFactor would snap back to 1
+          // (full backdrop opacity) while AnimatePresence is still fading out.
+          // The useEffect on `open` resets sheetY to 0 on the next open.
           onClose();
         },
       });
@@ -170,15 +174,20 @@ function MobileFilterSheet({
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop — outer div controls enter/exit fade; inner div fades with drag */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-50 md:hidden"
             onClick={handleBackdropClick}
-          />
+          >
+            <motion.div
+              style={{ opacity: dragFactor }}
+              className="pointer-events-none absolute inset-0 bg-black/70 backdrop-blur-sm"
+            />
+          </motion.div>
 
           {/* Sheet */}
           <motion.div
