@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { Search, X, LayoutGrid, List, SlidersHorizontal, Check } from 'lucide-react';
 import { techniques } from '../data/techniques';
 import type { Technique, TechniqueCategory, Difficulty, GiNoGi } from '../data/types';
@@ -72,6 +72,51 @@ function MobileFilterSheet({
 }) {
   const sheetRef = useRef<HTMLDivElement>(null);
 
+  // Swipe-to-dismiss state
+  const sheetY = useMotionValue(0);
+  const dragStartY = useRef(0);
+  const dragStartTime = useRef(0);
+
+  // Reset Y when sheet opens so it doesn't start mid-drag
+  useEffect(() => {
+    if (open) sheetY.set(0);
+  }, [open, sheetY]);
+
+  const handleDragStart = (e: React.TouchEvent | React.PointerEvent) => {
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    dragStartY.current = clientY;
+    dragStartTime.current = Date.now();
+  };
+
+  const handleDragMove = (e: React.TouchEvent | React.PointerEvent) => {
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const delta = clientY - dragStartY.current;
+    // Only allow dragging downward
+    if (delta > 0) sheetY.set(delta);
+  };
+
+  const handleDragEnd = () => {
+    const offset = sheetY.get();
+    const elapsed = Math.max(Date.now() - dragStartTime.current, 1);
+    const velocity = (offset / elapsed) * 1000; // px/s
+
+    if (offset > 80 || velocity > 400) {
+      // Dismiss: animate out then call onClose
+      animate(sheetY, window.innerHeight, {
+        type: 'tween',
+        duration: 0.2,
+        ease: 'easeOut',
+        onComplete: () => {
+          sheetY.set(0);
+          onClose();
+        },
+      });
+    } else {
+      // Snap back
+      animate(sheetY, 0, { type: 'spring', damping: 28, stiffness: 300 });
+    }
+  };
+
   // Close on outside tap
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
@@ -142,13 +187,24 @@ function MobileFilterSheet({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            style={{ y: sheetY }}
             className="fixed bottom-0 left-0 right-0 z-50 max-h-[85dvh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-background pb-safe md:hidden"
             aria-modal="true"
             role="dialog"
             aria-label="Filter techniques"
           >
-            {/* Handle */}
-            <div className="flex justify-center pt-3 pb-2">
+            {/* Handle — drag zone */}
+            <div
+              className="flex touch-none justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing"
+              onTouchStart={handleDragStart}
+              onTouchMove={handleDragMove}
+              onTouchEnd={handleDragEnd}
+              onPointerDown={handleDragStart}
+              onPointerMove={handleDragMove}
+              onPointerUp={handleDragEnd}
+              onPointerCancel={handleDragEnd}
+              aria-hidden="true"
+            >
               <div className="h-1 w-10 rounded-full bg-white/20" />
             </div>
 
