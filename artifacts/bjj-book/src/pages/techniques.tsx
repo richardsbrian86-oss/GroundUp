@@ -217,7 +217,7 @@ function MobileFilterSheet({
                 {hasFilters && (
                   <button
                     onClick={clearAll}
-                    className="font-sans text-[10px] uppercase tracking-[0.18em] text-primary"
+                    className="flex min-h-[44px] items-center px-2 font-sans text-[10px] uppercase tracking-[0.18em] text-primary"
                   >
                     Clear all
                   </button>
@@ -225,7 +225,7 @@ function MobileFilterSheet({
                 <button
                   onClick={onClose}
                   aria-label="Close filters"
-                  className="rounded-full p-1 text-muted-foreground transition-colors hover:text-foreground"
+                  className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
                 </button>
