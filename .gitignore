@@ -47,3 +47,7 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Local-only files (requested exclusions)
+attached_assets/Screen_Recording_20260807_140924_Chrome_1786126244031.mp4
+/test-results
