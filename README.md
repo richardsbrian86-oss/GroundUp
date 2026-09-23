@@ -37,6 +37,16 @@ On Replit, these are wired up as workflows, so the dev servers start automatical
 and are visible in the preview pane — you don't need to run the commands above by
 hand unless you're working outside Replit.
 
+## API security configuration
+
+The API accepts browser requests from loopback origins during local development. In
+production, set `CORS_ORIGINS` to a comma-separated list of the exact frontend
+origins allowed to call it; the server will refuse to start when this is missing.
+
+```bash
+CORS_ORIGINS=https://app.example.com,https://www.example.com
+```
+
 ## Stack
 
 - pnpm workspaces, TypeScript
